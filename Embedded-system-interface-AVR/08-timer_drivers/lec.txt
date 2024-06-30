@@ -1,0 +1,71 @@
+determinsm:  مرتب ال functions و عارف كل واحده هتاخد وقت قد ايه 
+انا اللي كاتب الmain بنفسي 
+
+responsive: لو بقيت responsive معناها مش determinsin
+
+
+determinis ->while (1)==superloop
+----------------------------------------
+adv          	             | dis
+determinism	high power consumtion 
+		simple HW
+		simple SW
+
+responsive-> ISR's    --background\foreground
+----------------------------------------
+adv                         | dis
+high perfo.	low determinism 
+		external HW
+		complex SW
+
+
+					4 digital signals 
+-rising edge 
+-falling edge
+-high
+-low 
+
+inside the PIC 
+
+latch memory carry the index of the source of interrupt 
+------------------------------------------------------
+reset non-maskabe interrupt
+------------------------------------------------------
+concept important :
+critical section 
+دة جزء عايز احميه م  انه اي interupt ياثر عليه 
+-->disable all interrupts
+	-----------
+	   code 
+	----------
+-->enable all interrupts
+
+
+priortiy types
+-fixed like vector table locate in flash 
+-flexible 
+
+
+ **#ISR address is not fixed, but vector table isn't 
+
+types of interurpts:
+-external --->adc
+-internal---> traps
+
+how to clr flag
+1-auto clr by HW
+2- set the bit by 0
+3-set the bit by 1
+4-read the flag
+
+i have to fetch, decod and excute before jump to ISR 
+#nesting interrupt
+
+in AVR we don't use Nesting interrupt, but in ARM it's ok
+
+
+interrupt latency and time diagram search
+diffe. ISR and functions 
+
+
+#interrupt saturation 

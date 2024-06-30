@@ -1,0 +1,18 @@
+frequancy system    8mhz --> 8 miliion instruction per sec
+
+frequancy timer
+استخدام ال pwm 
+>RMS ,root mean square 
+	ف حال اني عايز اشغل موتور مثلا بس اقلل ال rpm و مينفعش اوصلة 4 فولت عشان مش هيشتغل 
+	فكانك موصله ب 4 فولت ولكن ف الحقيقة بنتحكم ف الamplitude 
+> communications مبقاش مستخدم زي الاول و غالبا ال servo motor بس هو اللي بيستخدمها 
+
+
+fast PWM 
+phase PWM  only modes in avr 
+
+clear on CTC
+set on Top
+
+Tperiodic is the overflow time
+TON is compare time

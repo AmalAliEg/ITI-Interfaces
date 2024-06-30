@@ -1,0 +1,1 @@
+COTS concept is file contain APP <HAL <MCAL layers {component on the shelf}

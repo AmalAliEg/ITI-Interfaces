@@ -1,0 +1,125 @@
+
+interrupt.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000000bc  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .stab         00000300  00000000  00000000  00000110  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  2 .stabstr      0000036a  00000000  00000000  00000410  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   8:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  10:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  14:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  18:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  1c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  20:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  24:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  28:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  2c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  30:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  34:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  38:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  3c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  40:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  44:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  48:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  4c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  50:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+  60:	0e 94 53 00 	call	0xa6	; 0xa6 <main>
+  64:	0c 94 5c 00 	jmp	0xb8	; 0xb8 <_exit>
+
+00000068 <__bad_interrupt>:
+  68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000006c <MINT_vIntInit>:
+#include "INT_config.h"
+
+
+
+
+void MINT_vIntInit(EXTI_channel_t copyEnumChannelNum){
+  6c:	df 93       	push	r29
+  6e:	cf 93       	push	r28
+  70:	0f 92       	push	r0
+  72:	cd b7       	in	r28, 0x3d	; 61
+  74:	de b7       	in	r29, 0x3e	; 62
+  76:	89 83       	std	Y+1, r24	; 0x01
+	switch (copyEnumChannelNum)
+  78:	89 81       	ldd	r24, Y+1	; 0x01
+  7a:	88 2f       	mov	r24, r24
+  7c:	90 e0       	ldi	r25, 0x00	; 0
+  7e:	00 97       	sbiw	r24, 0x00	; 0
+  80:	71 f4       	brne	.+28     	; 0x9e <MINT_vIntInit+0x32>
+#if (IN0_Sense_ctrl==SLOW)
+		CLR_BIT(MCUCR, MCUCR_ISC00);
+		CLR_BIT(MCUCR, MCUCR_ISC01);
+
+#elif (IN0_Sense_ctrl==SFALL_EDG)
+		CLR_BIT(MCUCR, MCUCR_ISC00);
+  82:	a5 e5       	ldi	r26, 0x55	; 85
+  84:	b0 e0       	ldi	r27, 0x00	; 0
+  86:	e5 e5       	ldi	r30, 0x55	; 85
+  88:	f0 e0       	ldi	r31, 0x00	; 0
+  8a:	80 81       	ld	r24, Z
+  8c:	8e 7f       	andi	r24, 0xFE	; 254
+  8e:	8c 93       	st	X, r24
+		SET_BIT(MCUCR, MCUCR_ISC01);
+  90:	a5 e5       	ldi	r26, 0x55	; 85
+  92:	b0 e0       	ldi	r27, 0x00	; 0
+  94:	e5 e5       	ldi	r30, 0x55	; 85
+  96:	f0 e0       	ldi	r31, 0x00	; 0
+  98:	80 81       	ld	r24, Z
+  9a:	82 60       	ori	r24, 0x02	; 2
+  9c:	8c 93       	st	X, r24
+		break;
+
+	}
+
+
+}
+  9e:	0f 90       	pop	r0
+  a0:	cf 91       	pop	r28
+  a2:	df 91       	pop	r29
+  a4:	08 95       	ret
+
+000000a6 <main>:
+ *  Created on: Dec 18, 2023
+ *      Author: Aml
+ */
+
+int main()
+{
+  a6:	df 93       	push	r29
+  a8:	cf 93       	push	r28
+  aa:	cd b7       	in	r28, 0x3d	; 61
+  ac:	de b7       	in	r29, 0x3e	; 62
+  ae:	80 e0       	ldi	r24, 0x00	; 0
+  b0:	90 e0       	ldi	r25, 0x00	; 0
+
+}
+  b2:	cf 91       	pop	r28
+  b4:	df 91       	pop	r29
+  b6:	08 95       	ret
+
+000000b8 <_exit>:
+  b8:	f8 94       	cli
+
+000000ba <__stop_program>:
+  ba:	ff cf       	rjmp	.-2      	; 0xba <__stop_program>
